@@ -25,8 +25,8 @@ def ajouterTresor(joueur,tresor):
         tresor un entier strictement positif
     la fonction ne retourne rien mais modifie le joueur
     """
-   if tresor not in joueur['tresors']:
-		joueur['tresors'].append(tresor)
+    if tresor not in joueur['tresors']:
+	    joueur['tresors'].append(tresor)
 
 def prochainTresor(joueur):
     """
@@ -35,7 +35,8 @@ def prochainTresor(joueur):
         joueur le joueur
     résultat un entier représentant le trésor ou None
     """
-    return joueur['tresors'][0]
+    if len(joueur["tresors"]) >= 1:
+	    return joueur["tresors"][0]
 
 def tresorTrouve(joueur):
     """ 
