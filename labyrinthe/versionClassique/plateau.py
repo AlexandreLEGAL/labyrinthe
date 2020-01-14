@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 """
-                           Projet Labyrinthe 
+                           Projet Labyrinthe
         Projet Python 2019-2020 de 1ere année et AS DUT Informatique Orléans
-        
+
    Module plateau
    ~~~~~~~~~~~~~~
-   
-   Ce module gère le plateau de jeu. 
+
+   Ce module gère le plateau de jeu.
 """
 import random
 from matrice import *
@@ -24,37 +24,120 @@ def Plateau(nbJoueurs, nbTresors):
               - la carte amovible qui n'a pas été placée sur le plateau
     """
     if 12 <= nbTresors <= 45 and 1 <= nbJoueurs <= 4:
-        for carte in listeCartes:
+        for carte in listeCartes:  # modifie la liste de carte pour ne pas avoir formation de mur impossible
             if carte == "Ø":
                 listeCartes.remove(carte)
-        plateau = Matrice(7, 7)
-        # afficheMatrice(plateau)
-        for i in range(getNbLignes(plateau)):  # créer un plateau REMPLI de carte aléatoire
-            for j in range(getNbColonnes(plateau)):
-                setVal(plateau, i, j, listeCartes[random.randint(0, 10)])
-        afficheMatrice(plateau)
-        #  test de trésors
-        tresor = []
-        for elem in range(nbTresors):
-            tresor.append(elem)
-        print(tresor)
-        elem_tableau = []
-        for elem in plateau["Val"]:
-            elem_tableau.append(elem)
-        print(elem_tableau)
-        del elem_tableau[0][0]
-        del elem_tableau[0][5]
-        del elem_tableau[6][0]
-        del elem_tableau[6][5]
-        print(elem_tableau)
-        while cpt < nbTresors:
-            j = random.randint()
+        semi_plateau = Matrice(7, 7)
+        # listeCartes_mur = [] # FACTORISER LA FONCTION
+        # for carte in listeCartes:
+        #
+        # afficheMatrice(semi_plateau)
+        ## Créer une matrice vide, ajouter les cartes fixes et les pions
+        liste_joueur = [[], [], [], []]
+        for i in range(nbJoueurs):
+            liste_joueur[i].append(i + 1)
+        # print("liste_joueur = " + str(liste_joueur))
+        setVal(semi_plateau, 0, 0, Carte(True, False, False, True, 0, liste_joueur[0]))
+        setVal(semi_plateau, 0, 6, Carte(True, False, False, False, 0, liste_joueur[1]))
+        setVal(semi_plateau, 6, 0, Carte(True, False, False, False, 0, liste_joueur[2]))
+        setVal(semi_plateau, 6, 6, Carte(True, True, False, False, 0, liste_joueur[3]))
+        carte_fixe_sans_angles = [{"Mur": (True, False, False, False), "Tresor": 1, "Pions": []},
+                                  {"Mur": (True, False, False, False), "Tresor": 2, "Pions": []},
+                                  {"Mur": (False, True, False, False), "Tresor": 3, "Pions": []},
+                                  {"Mur": (False, True, False, False), "Tresor": 4, "Pions": []},
+                                  {"Mur": (True, False, False, False), "Tresor": 5, "Pions": []},
+                                  {"Mur": (False, False, False, True), "Tresor": 6, "Pions": []},
+                                  {"Mur": (False, True, False, False), "Tresor": 7, "Pions": []},
+                                  {"Mur": (False, False, True, False), "Tresor": 8, "Pions": []},
+                                  {"Mur": (True, False, False, True), "Tresor": 9, "Pions": []},
+                                  {"Mur": (True, False, False, True), "Tresor": 10, "Pions": []},
+                                  {"Mur": (False, False, True, False), "Tresor": 11, "Pions": []},
+                                  {"Mur": (False, False, True, False), "Tresor": 12, "Pions": []},
+                                  ]
+        indice = 0
+        for i in range(0, getNbLignes(semi_plateau), 2):
+            if i == 0 or i == 6:
+                for j in range(2, 5, 2):
+                    # print(indice)
+                    setVal(semi_plateau, i, j, carte_fixe_sans_angles[indice])
+                    indice += 1
+            else:
+                for j in range(0, 7, 2):
+                    # print(indice)
+                    setVal(semi_plateau, i, j, carte_fixe_sans_angles[indice])
+                    indice += 1
 
-        # for k in range(getNbLignes(plateau)):  # mets des tresors aléatoirement sur le plateau
-        #     for l in range(getNbColonnes(plateau)):
-        #         mettreTresor(char_to_carte(getVal(plateau, k, l)), random.randint(1, nbTresors))
-                # print('random')
+        # setVal(semi_plateau, 0, 2, Carte(True, False, False, True, 1))
+        # setVal(semi_plateau, 0, 4, Carte(True, False, False, False, 2))
+        #
+        # setVal(semi_plateau, 2, 0, Carte(True, False, False, False, 3))
+        # setVal(semi_plateau, 2, 2, Carte(True, True, False, False, 4))
+        # setVal(semi_plateau, 2, 4, Carte(True, False, False, True, 5))
+        # setVal(semi_plateau, 2, 6, Carte(True, False, False, False, 6))
+        #
+        # setVal(semi_plateau, 4, 0, Carte(True, False, False, False, 7))
+        # setVal(semi_plateau, 4, 2, Carte(True, True, False, False, 8))
+        # setVal(semi_plateau, 4, 4, Carte(True, False, False, True, 9))
+        # setVal(semi_plateau, 4, 6, Carte(True, False, False, False, 10))
+        #
+        # setVal(semi_plateau, 6, 2, Carte(True, True, False, False, 11))
+        # setVal(semi_plateau, 6, 4, Carte(True, False, False, True, 12))
 
+        # print("semi_plateau = " + str(semi_plateau))
+
+        ## ensuite la ou les valeurs de la matrice = 0 mettre des cartes amovible préalablement créer
+
+        # créer une liste de carte amovible
+
+        carte_amovible = []  # 6 jonction, 16 angles, 12 droit
+        murAngle = Carte(True, False, False, True)
+        murJonction = Carte(True, False, False, False)
+        murDroit = Carte(True, False, True, False)
+        for i in range(16):  #  On ajoute 16 angles tourner aléatoirement dans carte_amovible
+            tourneAleatoire(murAngle)
+            carte_amovible.append(murAngle.copy())
+        for i in range(6):  #  On ajoute 6 jonction tourner aléatoirement dans carte_amovible
+            tourneAleatoire(murJonction)
+            carte_amovible.append(murJonction.copy())
+        for i in range(12):  #  On ajoute 12 droit tourner aléatoirement dans carte_amovible
+            tourneAleatoire(murDroit)
+            carte_amovible.append(murDroit.copy())
+
+        # Mélanger les carte amovible
+
+        random.shuffle(carte_amovible)  # On mélange toute les cartes amovibles
+        # print("carte_amovible = " + str(carte_amovible))
+
+        # Mettre des trésors dans les premières cartes
+
+        for i in range(nbTresors - 12):  # On met des trésors dans les nbTresors premières carte puis on remélange
+            mettreTresor(carte_amovible[i], i + 13)  # i+13 car les trésor de 1 à 12 sont placé sur les carte fixes
+        # print("carte_amovible = " + str(carte_amovible))
+
+        # Mélanger
+
+        random.shuffle(carte_amovible)
+        # print("carte_amovible avec tresor melanger = " + str(carte_amovible))
+
+        # Placer les cartes amovibles dans le plateau
+
+        for i in range(getNbLignes(semi_plateau)):
+            nord = carte_amovible[0]["Mur"][0]
+            est = carte_amovible[0]["Mur"][1]
+            sud = carte_amovible[0]["Mur"][2]
+            ouest = carte_amovible[0]["Mur"][3]
+            if i % 2 == 0:
+                for j in range(1, getNbColonnes(semi_plateau), 2):
+                    setVal(semi_plateau, i, j, Carte(nord, est, sud, ouest, carte_amovible[0]["Tresor"]))
+                    carte_amovible.pop(0)
+                    # print("carte_amovible = " + str(carte_amovible))
+            else:
+                for j in range(getNbColonnes(semi_plateau)):
+                    setVal(semi_plateau, i, j, Carte(nord, est, sud, ouest, carte_amovible[0]["Tresor"]))
+                    carte_amovible.pop(0)
+                    # print("carte_amovible = " + str(carte_amovible))
+        # print("semi_plateau avec carte amovible = " + str(semi_plateau))
+        return semi_plateau, carte_amovible[0]
 
 
 def creerCartesAmovibles(tresorDebut, nbTresors):

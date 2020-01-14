@@ -80,6 +80,8 @@ def afficheMatrice(mat):
 # ------------------------------------------
 # decalages
 # ------------------------------------------
+
+
 def decalageLigneAGauche(matrice, numLig, nouvelleValeur=0):
     """
     permet de décaler une ligne vers la gauche en insérant une nouvelle
