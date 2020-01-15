@@ -162,7 +162,18 @@ def saisirOrdre(lmt):
               c'est à dire le numéro de la ligne ou de la colonne où insérer la carte
               si l'ordre saisi n'est pas valide la focntion retourne (-1,-1)
     """
-    pass
+    x = input("Veuillez choisir l'un des caractères suivants : \n T: Pour tourner la pièce a jouer \n N: Pour insérer la pièce en direction du Nord \n E: Pour insérer la pièce en direction de l'Est \n S: Pour insérer la pièce en direction du Sud \n O: Pour insérer la pièce en direction de l'Ouest \n")
+    if x == 'T':
+        res = (x,None)
+    elif x == 'N' or x == 'E' or x == 'S' or x == 'O':
+        y=input("Veuillez rentre un chiffre parmis les suivants: '1', '3' ou '5'")
+        if y == "1" or y == "3" or y == "5":
+            res = (x,int(y))
+        else :
+            res = (-1,-1)
+    else :
+        res = (-1,-1)
+    return res
 
 def saisirDeplacement(lmt):
     """
@@ -170,7 +181,12 @@ def saisirDeplacement(lmt):
     paramètre: lmt: une vue texte de labyrinthe
     résultat: un couple d'entier (lin,col) indiquant les coordonnées de la case destination. Si l'utilisateur a entré des coordonnées incorrecte la fonction retourne (-1,-1)
     """    
-    pass
+    x=input("Choississez une ligne de déplacement pour votre pion.")
+    y=input("Choississez une colonne de déplacement pour votre pion.")
+    if x>="0" and x<="6" and y>="0" and y<="6":
+        return (int(x),int(y))
+    else:
+        return (-1,-1)
         
 # demarre la partie en mode texte
 def demarrer(lmt):
@@ -190,7 +206,7 @@ def demarrer(lmt):
             x,y=saisirOrdre(lmt) # on saisit une ordre de phase 1
             res=executerActionPhase1(labyrinthe,x,y) # on effectue les actions liées à cet ordre
             # traitement du résultat de l'ordre pour afficher le bon message à l'utilisateur
-            if res==0: 
+            if res==0:
                 message="La carte a été tournée"
             elif res==1:
                 message="La carte a bien été insérée"
@@ -201,7 +217,7 @@ def demarrer(lmt):
             else:
                 message="Veuillez soit tourner la carte soit l'insérer"
             afficheLabyrinthe(lmt,message)
-            
+
         # la première phase est terminée, on va demander au joueur sa case destination
         chemin=None
         xDep,yDep=getCoordonneesJoueurCourant(labyrinthe)
@@ -211,8 +227,8 @@ def demarrer(lmt):
             xA,yA=saisirDeplacement(lmt) # saisie de la destination
             if xA==-1 or yA==-1: # coordonées incorrectes
                 afficheLabyrinthe(lmt,"Veuillez choisir une case du labyrinthe")
-            else: # coordonées correctes 
-                  #=> on va verifier l'accessibilité de la case destination pour le joueur courant 
+            else: # coordonées correctes
+                  #=> on va verifier l'accessibilité de la case destination pour le joueur courant
                 chemin=accessibleDist(plateau,xDep,yDep,xA,yA)
                 if chemin==None:
                     afficheLabyrinthe(lmt,"Cette case n'est pas accessible au joueur "+nomJC)
@@ -245,17 +261,20 @@ if __name__=='__main__':
     listeJoueurs=[]
     rep='O'
     i=1
-    while rep in ['o','O']:
-        nom=input("Nom du joueur "+str(i)+"? ")
-        listeJoueurs.append(nom)
-        i+=1
-        if i==5:
-            rep ='N'
-        else:
-            rep=input("Y a-t-il un autre joueurs (o/N)? ")
+    listeJoueurs.append("oui")
+    listeJoueurs.append("non")
+    # while rep in ['o','O']:
+    #     nom=input("Nom du joueur "+str(i)+"? ")
+    #     listeJoueurs.append(nom)
+    #     i+=1
+    #     if i==5:
+    #         rep ='N'
+    #     else:
+    #         rep=input("Y a-t-il un autre joueurs (o/N)? ")
     
     # saisie du nombre de trésors par joueur
-    nbTresors=input("Combien de trésors à trouver par joueur (0 pour le maximum possible)?")
+    # nbTresors=input("Combien de trésors à trouver par joueur (0 pour le maximum possible)?")
+    nbTresors=8
     ok=True
     try:
         nbTresorsInt=int(nbTresors)

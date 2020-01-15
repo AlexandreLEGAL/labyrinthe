@@ -238,8 +238,8 @@ def getTresorCourant(labyrinthe):
     paramètre: labyritnthe: le labyrinthe considéré 
     resultat: le numéro du trésor recherché par le joueur courant
     """
-    if len(labyrinthe['Joueurs'][0]["Tresors"]) > 0:
-        return getListeJoueurs(labyrinthe)[0]["Tresors"][0]
+    if len(labyrinthe['Joueurs'][0]["tresors"]) > 0:
+        return getListeJoueurs(labyrinthe)[0]["tresors"][0]
     return None
 
 def getCoordonneesTresorCourant(labyrinthe):
