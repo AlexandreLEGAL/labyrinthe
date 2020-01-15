@@ -85,6 +85,10 @@ def changerJoueurCourant(joueurs):
     jprec=joueurs[0]
     joueurs.pop(0)
     joueurs.append(jprec)
+    cpt=0
+    for joueur in joueurs:
+        joueur["numJoueur"] = cpt
+        cpt += 1
 
 def getNbJoueurs(joueurs):
     """
@@ -127,7 +131,7 @@ def numJoueurCourant(joueurs):
     paramètre: joueurs la liste des joueurs
     résultat: le numéro du joueur courant
     """
-    return joueurs[0]["numJoueur"]
+    return getJoueurCourant(joueurs)["numJoueur"]
 
 def nomJoueurCourant(joueurs):
     """
