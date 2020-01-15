@@ -251,7 +251,90 @@ def accessible(plateau, ligD, colD, ligA, colA):
     résultat: un boolean indiquant s'il existe un chemin entre la case de départ
               et la case d'arrivée
     """
-    pass
+    trouver = False
+    case_parcouru = 0
+    liste_chemin = [(ligD, colD)]
+    print(liste_chemin)
+    cpt = 0
+    nb = 0
+    indice_chemin = []
+    while case_parcouru < 49 and not trouver:
+        if len(liste_chemin) > 1:  # Pour tout les autre déplacements ajoute les différents chemins possible dans liste_chemin
+            nbchemin = cpt
+            cpt = 0
+            for indice in indice_chemin:  # len(liste_chemin)-cpt, len(liste_chemin)-1 ## 1, nbchemin * 2, 2
+                # for chemin_poss in range(1, nbchemin * 2, 2):
+                nb = 0
+                if passageNord(getVal(plateau[0], liste_chemin[indice][0], liste_chemin[indice][1]),
+                               getVal(plateau[0], liste_chemin[indice][0] - 1, liste_chemin[indice][1])):
+                    liste_chemin.append((liste_chemin[indice][0] - 1, liste_chemin[indice][1]))
+                    cpt += 1
+                    # indice_chemin.append(indice_chemin[-1] + 1)
+                    nb += 1
+                    print("nord")
+                    print(liste_chemin)
+                if passageEst(getVal(plateau[0], liste_chemin[indice][0], liste_chemin[indice][1]),
+                              getVal(plateau[0], liste_chemin[indice][0], liste_chemin[indice][1] + 1)):
+                    liste_chemin.append((liste_chemin[indice][0], liste_chemin[indice][1] + 1))
+                    cpt += 1
+                    # indice_chemin.append(indice_chemin[-1] + 1)
+                    nb += 1
+                    print("est")
+                    print(liste_chemin)
+                if passageSud(getVal(plateau[0], liste_chemin[indice][0], liste_chemin[indice][1]),
+                              getVal(plateau[0], liste_chemin[indice][0] + 1, liste_chemin[indice][1])):
+                    liste_chemin.append((liste_chemin[indice][0] + 1, liste_chemin[indice][1]))
+                    cpt += 1
+                    # indice_chemin.append(indice_chemin[-1] + 1)
+                    nb += 1
+                    print("Sud")
+                    print(liste_chemin)
+                if passageOuest(getVal(plateau[0], liste_chemin[indice][0], liste_chemin[indice][1]),
+                                getVal(plateau[0], liste_chemin[indice][0], liste_chemin[indice][1] - 1)):
+                    liste_chemin.append((liste_chemin[indice][0], liste_chemin[indice][1] - 1))
+                    cpt += 1
+                    # indice_chemin.append(indice_chemin[-1] + 1)
+                    nb += 1
+                    print("ouest")
+                    print(liste_chemin)
+                # print(case_parcouru)
+                case_parcouru += 1
+                if (ligA, colA) in liste_chemin:
+                    trouver = True
+            for elem in range(nb):
+                indice_chemin.append(indice_chemin[-1] + 1)
+
+            for elem in range(nb):
+                indice_chemin.pop(elem)
+                print(liste_chemin)
+                print(cpt)
+                print(case_parcouru)
+        elif len(liste_chemin) == 1:  # Pour le premier déplacement ajoute les différents chemins possible dans liste_chemin
+            if passageNord(getVal(plateau[0], ligD, colD), getVal(plateau[0], ligD - 1, colD)):
+                liste_chemin.append((ligD - 1, colD))
+                cpt += 1
+                indice_chemin.append(cpt)
+            if passageEst(getVal(plateau[0], ligD, colD), getVal(plateau[0], ligD, colD + 1)):
+                liste_chemin.append((ligD, colD + 1))
+                cpt += 1
+                indice_chemin.append(cpt)
+            if passageSud(getVal(plateau[0], ligD, colD), getVal(plateau[0], ligD + 1, colD)):
+                liste_chemin.append((ligD + 1, colD))
+                cpt += 1
+                indice_chemin.append(cpt)
+            if passageOuest(getVal(plateau[0], ligD, colD), getVal(plateau[0], ligD, colD - 1)):
+                liste_chemin.append((ligD, colD - 1))
+                cpt += 1
+                indice_chemin.append(cpt)
+            case_parcouru = +1
+
+            print(liste_chemin)
+            print(cpt)
+            print(case_parcouru)
+            print(indice_chemin)
+        if len(liste_chemin) == 1:
+            case_parcouru = 50
+    return trouver
 
 
 def accessibleDist(plateau, ligD, colD, ligA, colA):
