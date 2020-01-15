@@ -19,7 +19,7 @@ def ListeJoueurs(nomsJoueurs):
     résultat: la liste des joueurs avec un joueur courant mis à 0
     """
     liste = []
-    cpt = 0
+    cpt = 1
     for elem in nomsJoueurs:
         liste.append(Joueur(elem))
     for joueur in liste:
@@ -85,10 +85,7 @@ def changerJoueurCourant(joueurs):
     jprec=joueurs[0]
     joueurs.pop(0)
     joueurs.append(jprec)
-    cpt=0
-    for joueur in joueurs:
-        joueur["numJoueur"] = cpt
-        cpt += 1
+    
 
 def getNbJoueurs(joueurs):
     """
