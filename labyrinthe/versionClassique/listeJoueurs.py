@@ -11,6 +11,7 @@
 import random
 from joueur import *
 
+
 def ListeJoueurs(nomsJoueurs):
     """
     créer une liste de joueurs dont les noms sont dans la liste de noms passés en paramètre
@@ -20,10 +21,11 @@ def ListeJoueurs(nomsJoueurs):
     """
     listejoueurs = []
 
-    for joueur in nomsJoueurs :
+    for joueur in nomsJoueurs:
         nouveaujoueur = Joueur(joueur)
         listejoueurs.append(nouveaujoueur)
     return listejoueurs
+
 
 def ajouterJoueur(joueurs, joueur):
     """
@@ -34,15 +36,16 @@ def ajouterJoueur(joueurs, joueur):
     """
     joueurs.append(Joueur(joueur))
 
+
 def initAleatoireJoueurCourant(joueurs):
     """
     tire au sort le joueur courant
     paramètre: joueurs un liste de joueurs
     cette fonction ne retourne rien mais modifie la liste des joueurs
     """
-    
 
-def distribuerTresors(joueurs,nbTresors=24, nbTresorMax=0):
+
+def distribuerTresors(joueurs, nbTresors=24, nbTresorMax=0):
     """
     distribue de manière aléatoire des trésors entre les joueurs.
     paramètres: joueurs la liste des joueurs
@@ -56,13 +59,15 @@ def distribuerTresors(joueurs,nbTresors=24, nbTresorMax=0):
     """
     pass
 
+
 def changerJoueurCourant(joueurs):
     """
     passe au joueur suivant (change le joueur courant donc)
     paramètres: joueurs la liste des joueurs
     cette fonction ne retourne rien mais modifie la liste des joueurs
-    """   
+    """
     pass
+
 
 def getNbJoueurs(joueurs):
     """
@@ -72,6 +77,7 @@ def getNbJoueurs(joueurs):
     """
     pass
 
+
 def getJoueurCourant(joueurs):
     """
     retourne le joueur courant
@@ -79,6 +85,7 @@ def getJoueurCourant(joueurs):
     résultat: le joueur courant
     """
     pass
+
 
 def joueurCourantTrouveTresor(joueurs):
     """
@@ -89,7 +96,8 @@ def joueurCourantTrouveTresor(joueurs):
     """
     pass
 
-def nbTresorsRestantsJoueur(joueurs,numJoueur):
+
+def nbTresorsRestantsJoueur(joueurs, numJoueur):
     """
     retourne le nombre de trésors restant pour le joueur dont le numéro 
     est donné en paramètre
@@ -99,6 +107,7 @@ def nbTresorsRestantsJoueur(joueurs,numJoueur):
     """
     pass
 
+
 def numJoueurCourant(joueurs):
     """
     retourne le numéro du joueur courant
@@ -106,6 +115,7 @@ def numJoueurCourant(joueurs):
     résultat: le numéro du joueur courant
     """
     pass
+
 
 def nomJoueurCourant(joueurs):
     """
@@ -115,7 +125,8 @@ def nomJoueurCourant(joueurs):
     """
     pass
 
-def nomJoueur(joueurs,numJoueur):
+
+def nomJoueur(joueurs, numJoueur):
     """
     retourne le nom du joueur dont le numero est donné en paramètre
     paramètres: joueurs la liste des joueurs
@@ -124,7 +135,8 @@ def nomJoueur(joueurs,numJoueur):
     """
     pass
 
-def prochainTresorJoueur(joueurs,numJoueur):
+
+def prochainTresorJoueur(joueurs, numJoueur):
     """
     retourne le trésor courant du joueur dont le numero est donné en paramètre
     paramètres: joueurs la liste des joueurs
@@ -133,6 +145,7 @@ def prochainTresorJoueur(joueurs,numJoueur):
     """
     pass
 
+
 def tresorCourant(joueurs):
     """
     retourne le trésor courant du joueur courant
@@ -140,6 +153,7 @@ def tresorCourant(joueurs):
     résultat: le prochain trésor du joueur courant (un entier)
     """
     pass
+
 
 def joueurCourantAFini(joueurs):
     """

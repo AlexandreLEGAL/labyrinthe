@@ -9,15 +9,17 @@
    Ce module gère un joueur. 
 """
 
+
 def Joueur(nom):
     """
     creer un nouveau joueur portant le nom passé en paramètre. Ce joueur possède une liste de trésors à trouver vide
     paramètre: nom une chaine de caractères
     retourne le joueur ainsi créé
     """
-    return {'nom':nom, 'tresors':[],'numJoueur':0}
+    return {'nom': nom, 'tresors': [], 'numJoueur': 0}
 
-def ajouterTresor(joueur,tresor):
+
+def ajouterTresor(joueur, tresor):
     """
     ajoute un trésor à trouver à un joueur (ce trésor sera ajouter en fin de liste) Si le trésor est déjà dans la liste des trésors à trouver la fonction ne fait rien
     paramètres:
@@ -26,7 +28,8 @@ def ajouterTresor(joueur,tresor):
     la fonction ne retourne rien mais modifie le joueur
     """
     if tresor not in joueur['tresors']:
-	    joueur['tresors'].append(tresor)
+        joueur['tresors'].append(tresor)
+
 
 def prochainTresor(joueur):
     """
@@ -36,7 +39,8 @@ def prochainTresor(joueur):
     résultat un entier représentant le trésor ou None
     """
     if len(joueur["tresors"]) >= 1:
-	    return joueur["tresors"][0]
+        return joueur["tresors"][0]
+
 
 def tresorTrouve(joueur):
     """ 
@@ -47,6 +51,7 @@ def tresorTrouve(joueur):
     """
     joueur['tresors'].pop(0)
 
+
 def getNbTresorsRestants(joueur):
     """
     retourne le nombre de trésors qu'il reste à trouver
@@ -54,6 +59,7 @@ def getNbTresorsRestants(joueur):
     résultat: le nombre de trésors attribués au joueur
     """
     return len(joueur['tresors'])
+
 
 def getNom(joueur):
     """
