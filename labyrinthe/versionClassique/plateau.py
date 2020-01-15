@@ -18,7 +18,7 @@ def Plateau(nbJoueurs, nbTresors):
     créer un nouveau plateau contenant nbJoueurs et nbTrésors
     paramètres: nbJoueurs le nombre de joueurs (un nombre entre 1 et 4)
                 nbTresors le nombre de trésor à placer (un nombre entre 1 et 49)
-    resultat: un couple contenant
+    resultat: une structure contenant
               - une matrice de taille 7x7 représentant un plateau de labyrinthe où les cartes
                 ont été placée de manière aléatoire
               - la carte amovible qui n'a pas été placée sur le plateau
@@ -36,7 +36,7 @@ def Plateau(nbJoueurs, nbTresors):
         liste_joueur = [[], [], [], []]
         for i in range(nbJoueurs):
             liste_joueur[i].append(i + 1)
-        # print("liste_joueur = " + str(liste_joueur))
+        # # print("liste_joueur = " + str(liste_joueur))
         setVal(semi_plateau, 0, 0, Carte(True, False, False, True, 0, liste_joueur[0]))
         setVal(semi_plateau, 0, 6, Carte(True, False, False, False, 0, liste_joueur[1]))
         setVal(semi_plateau, 6, 0, Carte(True, False, False, False, 0, liste_joueur[2]))
@@ -58,32 +58,16 @@ def Plateau(nbJoueurs, nbTresors):
         for i in range(0, getNbLignes(semi_plateau), 2):
             if i == 0 or i == 6:
                 for j in range(2, 5, 2):
-                    # print(indice)
+                    # # print(indice)
                     setVal(semi_plateau, i, j, carte_fixe_sans_angles[indice])
                     indice += 1
             else:
                 for j in range(0, 7, 2):
-                    # print(indice)
+                    # # print(indice)
                     setVal(semi_plateau, i, j, carte_fixe_sans_angles[indice])
                     indice += 1
 
-        # setVal(semi_plateau, 0, 2, Carte(True, False, False, True, 1))
-        # setVal(semi_plateau, 0, 4, Carte(True, False, False, False, 2))
-        #
-        # setVal(semi_plateau, 2, 0, Carte(True, False, False, False, 3))
-        # setVal(semi_plateau, 2, 2, Carte(True, True, False, False, 4))
-        # setVal(semi_plateau, 2, 4, Carte(True, False, False, True, 5))
-        # setVal(semi_plateau, 2, 6, Carte(True, False, False, False, 6))
-        #
-        # setVal(semi_plateau, 4, 0, Carte(True, False, False, False, 7))
-        # setVal(semi_plateau, 4, 2, Carte(True, True, False, False, 8))
-        # setVal(semi_plateau, 4, 4, Carte(True, False, False, True, 9))
-        # setVal(semi_plateau, 4, 6, Carte(True, False, False, False, 10))
-        #
-        # setVal(semi_plateau, 6, 2, Carte(True, True, False, False, 11))
-        # setVal(semi_plateau, 6, 4, Carte(True, False, False, True, 12))
-
-        # print("semi_plateau = " + str(semi_plateau))
+        # # print("semi_plateau = " + str(semi_plateau))
 
         ## ensuite la ou les valeurs de la matrice = 0 mettre des cartes amovible préalablement créer
 
@@ -106,18 +90,18 @@ def Plateau(nbJoueurs, nbTresors):
         # Mélanger les carte amovible
 
         random.shuffle(carte_amovible)  # On mélange toute les cartes amovibles
-        # print("carte_amovible = " + str(carte_amovible))
+        # # print("carte_amovible = " + str(carte_amovible))
 
         # Mettre des trésors dans les premières cartes
 
         for i in range(nbTresors - 12):  # On met des trésors dans les nbTresors premières carte puis on remélange
             mettreTresor(carte_amovible[i], i + 13)  # i+13 car les trésor de 1 à 12 sont placé sur les carte fixes
-        # print("carte_amovible = " + str(carte_amovible))
+        # # print("carte_amovible = " + str(carte_amovible))
 
         # Mélanger
 
         random.shuffle(carte_amovible)
-        # print("carte_amovible avec tresor melanger = " + str(carte_amovible))
+        # # print("carte_amovible avec tresor melanger = " + str(carte_amovible))
 
         # Placer les cartes amovibles dans le plateau
 
@@ -130,13 +114,13 @@ def Plateau(nbJoueurs, nbTresors):
                 for j in range(1, getNbColonnes(semi_plateau), 2):
                     setVal(semi_plateau, i, j, Carte(nord, est, sud, ouest, carte_amovible[0]["Tresor"]))
                     carte_amovible.pop(0)
-                    # print("carte_amovible = " + str(carte_amovible))
+                    # # print("carte_amovible = " + str(carte_amovible))
             else:
                 for j in range(getNbColonnes(semi_plateau)):
                     setVal(semi_plateau, i, j, Carte(nord, est, sud, ouest, carte_amovible[0]["Tresor"]))
                     carte_amovible.pop(0)
-                    # print("carte_amovible = " + str(carte_amovible))
-        # print("semi_plateau avec carte amovible = " + str(semi_plateau))
+                    # # print("carte_amovible = " + str(carte_amovible))
+        # # print("semi_plateau avec carte amovible = " + str(semi_plateau))
         return semi_plateau, carte_amovible[0]
 
 
@@ -149,7 +133,36 @@ def creerCartesAmovibles(tresorDebut, nbTresors):
                 nbTresors: le nombre total de trésor à créer
     résultat: la liste mélangée aléatoirement des cartes amovibles créees
     """
-    pass
+    carte_amovible = []  # 6 jonction, 16 angles, 12 droit
+    murAngle = Carte(True, False, False, True)
+    murJonction = Carte(True, False, False, False)
+    murDroit = Carte(True, False, True, False)
+    for i in range(16):  #  On ajoute 16 angles tourner aléatoirement dans carte_amovible
+        tourneAleatoire(murAngle)
+        carte_amovible.append(murAngle.copy())
+    for i in range(6):  #  On ajoute 6 jonction tourner aléatoirement dans carte_amovible
+        tourneAleatoire(murJonction)
+        carte_amovible.append(murJonction.copy())
+    for i in range(12):  #  On ajoute 12 droit tourner aléatoirement dans carte_amovible
+        tourneAleatoire(murDroit)
+        carte_amovible.append(murDroit.copy())
+
+    # Mélanger les carte amovible
+
+    random.shuffle(carte_amovible)  # On mélange toute les cartes amovibles
+    # print("carte_amovible = " + str(carte_amovible))
+
+    # Mettre des trésors dans les premières cartes
+
+    for i in range(nbTresors - 12):  # On met des trésors dans les nbTresors premières carte puis on remélange
+        mettreTresor(carte_amovible[i],
+                     i + 13 + tresorDebut)  # i+13 car les trésor de 1 à 12 sont placé sur les carte fixes
+    # print("carte_amovible = " + str(carte_amovible))
+
+    # Mélanger
+
+    random.shuffle(carte_amovible)
+    return carte_amovible
 
 
 def prendreTresorPlateau(plateau, lig, col, numTresor):
@@ -163,7 +176,10 @@ def prendreTresorPlateau(plateau, lig, col, numTresor):
                 numTresor: le numéro du trésor à prendre sur la carte
     resultat: un booléen indiquant si le trésor était bien sur la carte considérée
     """
-    pass
+    trouver = False
+    if getVal(plateau[0], lig, col)["Tresor"] == numTresor:
+        trouver = True
+    return trouver
 
 
 def getCoordonneesTresor(plateau, numTresor):
@@ -174,7 +190,12 @@ def getCoordonneesTresor(plateau, numTresor):
     resultat: un couple d'entier donnant les coordonnées du trésor ou None si
               le trésor n'est pas sur le plateau
     """
-    pass
+    res = None
+    for i in range(getNbLignes(plateau[0])):
+        for j in range(getNbColonnes(plateau[0])):
+            if getTresor(getVal(plateau[0], i, j)) == numTresor:
+                res = i, j
+    return res
 
 
 def getCoordonneesJoueur(plateau, numJoueur):
@@ -185,7 +206,12 @@ def getCoordonneesJoueur(plateau, numJoueur):
     resultat: un couple d'entier donnant les coordonnées du joueur ou None si
               le joueur n'est pas sur le plateau
     """
-    pass
+    res = None
+    for i in range(getNbLignes(plateau[0])):
+        for j in range(getNbColonnes(plateau[0])):
+            if possedePion(getVal(plateau[0], i, j), numJoueur):
+                res = i, j
+    return res
 
 
 def prendrePionPlateau(plateau, lin, col, numJoueur):
@@ -197,7 +223,9 @@ def prendrePionPlateau(plateau, lin, col, numJoueur):
                 numJoueur: le numéro du joueur qui correspond au pion
     Cette fonction ne retourne rien mais elle modifie le plateau
     """
-    pass
+    # print(getVal(plateau[0], lin, col))
+    prendrePion(plateau[0]["Val"][lin][col], numJoueur)
+    # print(getVal(plateau[0], lin, col))
 
 
 def poserPionPlateau(plateau, lin, col, numJoueur):
@@ -209,7 +237,7 @@ def poserPionPlateau(plateau, lin, col, numJoueur):
                 numJoueur: le numéro du joueur qui correspond au pion
     Cette fonction ne retourne rien mais elle modifie le plateau
     """
-    pass
+    poserPion(plateau[0]["Val"][lin][col], numJoueur)
 
 
 def accessible(plateau, ligD, colD, ligA, colA):
