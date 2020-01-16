@@ -11,6 +11,7 @@
 import random
 from matrice import *
 from carte import *
+from copy import deepcopy
 
 
 def Plateau(nbJoueurs, nbTresors):
@@ -368,3 +369,130 @@ def accessibleDist(plateau, ligD, colD, ligA, colA):
               de départ et la case d'arrivée
     """
     trouver = None
+    case_parcouru = 0
+    liste_chemin = [[(ligD, colD)]]
+    # print(liste_chemin)
+    cpt = 0
+    nb = 0
+    indice_chemin = []
+    while case_parcouru < 49 and trouver is None:
+        if len(
+                liste_chemin) > 1:  # Pour tout les autre déplacements ajoute les différents chemins possible dans liste_chemin
+            cpt = 0
+            # print("avant  = " + str(indice_chemin))
+            avant = len(indice_chemin)
+            # print("avant  = " + str(avant))
+            for indice in indice_chemin:  # len(liste_chemin)-cpt, len(liste_chemin)-1 ## 1, nbchemin * 2, 2
+                # for chemin_poss in range(1, nbchemin * 2, 2):
+                # print("nb" + str(nb))
+                if 0 <= liste_chemin[indice][-1][0] - 1 < 7:
+                    if passageNord(getVal(plateau[0], liste_chemin[indice][-1][0], liste_chemin[indice][-1][1]),
+                                   getVal(plateau[0], liste_chemin[indice][-1][0] - 1, liste_chemin[indice][-1][1])):
+                        liste_chemin.append(deepcopy(liste_chemin[indice]))
+                        liste_chemin[-1].append((liste_chemin[indice][-1][0] - 1, liste_chemin[indice][-1][1]))
+                        # liste_chemin.append((liste_chemin[indice][0] - 1, liste_chemin[indice][1]))
+                        cpt += 1
+                        # indice_chemin.append(indice_chemin[-1] + 1)
+                        nb += 1
+                        # print("Liste chemin possible = " + str(liste_chemin))
+                        # print("nb" + str(nb))
+                        # print("nord")
+                        # print(liste_chemin)
+                if 0 <= liste_chemin[indice][-1][1] + 1 < 7:
+                    if passageEst(getVal(plateau[0], liste_chemin[indice][-1][0], liste_chemin[indice][-1][1]),
+                                  getVal(plateau[0], liste_chemin[indice][-1][0], liste_chemin[indice][-1][1] + 1)):
+                        liste_chemin.append(deepcopy(liste_chemin[indice]))
+                        liste_chemin[-1].append((liste_chemin[indice][-1][0], liste_chemin[indice][-1][1] + 1))
+                        # liste_chemin.append((liste_chemin[indice][0], liste_chemin[indice][1] + 1))
+                        cpt += 1
+                        # indice_chemin.append(indice_chemin[-1] + 1)
+                        nb += 1
+                        # print("Liste chemin possible = " + str(liste_chemin))
+                        # print("nb" + str(nb))
+                        # print("est")
+                        # print(liste_chemin)
+                if 0 <= liste_chemin[indice][-1][0] + 1 < 7:
+                    if passageSud(getVal(plateau[0], liste_chemin[indice][-1][0], liste_chemin[indice][-1][1]),
+                                  getVal(plateau[0], liste_chemin[indice][-1][0] + 1, liste_chemin[indice][-1][1])):
+                        liste_chemin.append(deepcopy(liste_chemin[indice]))
+                        liste_chemin[-1].append((liste_chemin[indice][-1][0] + 1, liste_chemin[indice][-1][1]))
+                        # liste_chemin.append((liste_chemin[indice][0] + 1, liste_chemin[indice][1]))
+                        cpt += 1
+                        # indice_chemin.append(indice_chemin[-1] + 1)
+                        nb += 1
+                        # print("Liste chemin possible = " + str(liste_chemin))
+                        # print("nb" + str(nb))
+                        # print("Sud")
+                        # print(liste_chemin)
+                if 0 <= liste_chemin[indice][-1][1] - 1 < 7:
+                    if passageOuest(getVal(plateau[0], liste_chemin[indice][-1][0], liste_chemin[indice][-1][1]),
+                                    getVal(plateau[0], liste_chemin[indice][-1][0], liste_chemin[indice][-1][1] - 1)):
+                        liste_chemin.append(deepcopy(liste_chemin[indice]))
+                        liste_chemin[-1].append((liste_chemin[indice][-1][0], liste_chemin[indice][-1][1] - 1))
+                        # liste_chemin.append((liste_chemin[indice][0], liste_chemin[indice][1] - 1))
+                        cpt += 1
+                        # indice_chemin.append(indice_chemin[-1] + 1)
+                        nb += 1
+                        # print("Liste chemin possible = " + str(liste_chemin))
+                        # print("nb" + str(nb))
+                        # print("ouest")
+                        # print(liste_chemin)
+                # # print(case_parcouru)
+                case_parcouru += 1
+                for elem in liste_chemin:
+                    if (ligA, colA) in elem:
+                        trouver = elem
+                        # trouver = "Chemin trouver ! " + str(elem)
+                # print("indice_chemin" + str(indice_chemin))
+            # print(nb)
+            for elem in range(nb):
+                indice_chemin.append(indice_chemin[-1] + 1)
+            # print("indice_chemin après append" + str(indice_chemin))
+            for elem in range(avant):
+                indice_chemin.pop(0)
+            nb = 0
+            # print("indice_chemin après pop" + str(indice_chemin))
+            # print("Liste chemin possible = " + str(liste_chemin))
+            # print(liste_chemin)
+            # trouver = True
+            # print(cpt)
+            # print(case_parcouru)
+        elif len(
+                liste_chemin) == 1:  # Pour le premier déplacement ajoute les différents chemins possible dans liste_chemin
+            if 0 <= ligD - 1 < 7:
+                if passageNord(getVal(plateau[0], ligD, colD), getVal(plateau[0], ligD - 1, colD)):
+                    liste_chemin.append(deepcopy(liste_chemin[0]))
+                    liste_chemin[-1].append((ligD - 1, colD))
+                    cpt += 1
+                    indice_chemin.append(cpt)
+            if 0 <= colD + 1 < 7:
+                if passageEst(getVal(plateau[0], ligD, colD), getVal(plateau[0], ligD, colD + 1)):
+                    liste_chemin.append(deepcopy(liste_chemin[0]))
+                    liste_chemin[-1].append((ligD, colD + 1))
+                    cpt += 1
+                    indice_chemin.append(cpt)
+            if 0 <= ligD + 1 < 7:
+                if passageSud(getVal(plateau[0], ligD, colD), getVal(plateau[0], ligD + 1, colD)):
+                    liste_chemin.append(deepcopy(liste_chemin[0]))
+                    liste_chemin[-1].append((ligD + 1, colD))
+                    cpt += 1
+                    indice_chemin.append(cpt)
+            if 0 <= colD - 1 < 7:
+                if passageOuest(getVal(plateau[0], ligD, colD), getVal(plateau[0], ligD, colD - 1)):
+                    liste_chemin.append(deepcopy(liste_chemin[0]))
+                    liste_chemin[-1].append((ligD, colD - 1))
+                    cpt += 1
+                    indice_chemin.append(cpt)
+            case_parcouru = +1
+            for elem in liste_chemin:
+                if (ligA, colA) in elem:
+                    trouver = elem
+                    # trouver = "Chemin trouver ! " + str(elem)
+
+            # print("Liste premier chemin possible = " + str(liste_chemin))
+            # print(cpt)
+            # print(case_parcouru)
+            # print(indice_chemin)
+        if len(liste_chemin) == 1:
+            case_parcouru = 50
+    return trouver
