@@ -210,6 +210,9 @@ def getCoordonneesTresor(plateau, numTresor):
     # print(plateau)
     for i in range(getNbLignes(plateau[0])):
         for j in range(getNbColonnes(plateau[0])):
+            # print(plateau[0])
+            # print(i)
+            # print(j)
             if getTresor(getVal(plateau[0], i, j)) == numTresor:
                 res = i, j
     return res

@@ -108,7 +108,7 @@ def decalageLigneADroite(matrice, numLig, nouvelleValeur=0):
     résultat: la valeur de la case "ejectée" par le décalage
     """
     res = matrice["Val"][numLig][-1]
-    matrice["Val"][numLig] = [nouvelleValeur] + matrice["Val"][numLig][:-2]  #  modifie au lieu de -1
+    matrice["Val"][numLig] = [nouvelleValeur] + matrice["Val"][numLig][:-1]
     return res
 
 
