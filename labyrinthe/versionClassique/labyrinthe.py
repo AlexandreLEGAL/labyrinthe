@@ -39,7 +39,7 @@ def getPlateau(labyrinthe):
     paramètre: labyrinthe le labyrinthe considéré
     résultat: la matrice représentant le plateau de ce labyrinthe
     """
-    return labyrinthe["Plateau"][0]
+    return labyrinthe["Plateau"]
 
 def getNbParticipants(labyrinthe):
     """
@@ -98,7 +98,7 @@ def getNbTresors(labyrinthe):
         for j in range(0, 7):
             listerand.append((i, j))
     for (k,l) in listerand:
-        dico=getVal(labyrinthe["Plateau"][0],k,l)
+        dico=getVal(getPlateau(labyrinthe)[0],k,l)
         if dico["Tresor"]>0:
             res+=1
     return res
@@ -123,7 +123,9 @@ def enleverTresor(labyrinthe,lin,col,numTresor):
                 numTresor: le numéro du trésor à prendre sur la carte
     la fonction ne retourne rien mais modifie le labyrinthe
     """
+    # print(labyrinthe['Plateau'][0]["Val"][lin][col]["Tresor"])
     prendreTresorPlateau(getPlateau(labyrinthe), lin, col, numTresor)
+    # print(labyrinthe['Plateau'][0]["Val"][lin][col]["Tresor"])
 
 def prendreJoueurCourant(labyrinthe,lin,col):
     """
@@ -134,7 +136,9 @@ def prendreJoueurCourant(labyrinthe,lin,col):
                 col: la colonne où se trouve la carte
     la fonction ne retourne rien mais modifie le labyrinthe    
     """
-    prendrePionPlateau(getPlateau(labyrinthe), lin, col, getJoueurCourant(getListeJoueurs(labyrinthe)))
+    print(labyrinthe['Plateau'][0]["Val"][lin][col]["Pions"])
+    prendrePionPlateau(getPlateau(labyrinthe), lin, col, getJoueurCourant(getListeJoueurs(labyrinthe))['numJoueur'])
+    print(labyrinthe['Plateau'][0]["Val"][lin][col]["Pions"])
 
 def poserJoueurCourant(labyrinthe,lin,col):
     """
@@ -144,7 +148,9 @@ def poserJoueurCourant(labyrinthe,lin,col):
                 col: la colonne où se trouve la carte
     la fonction ne retourne rien mais modifie le labyrinthe     
     """
-    poserPionPlateau(getPlateau(labyrinthe), lin, col, getJoueurCourant(getListeJoueurs(labyrinthe)))
+    print(labyrinthe['Plateau'][0]["Val"][lin][col]["Pions"])
+    poserPionPlateau(getPlateau(labyrinthe), lin, col, getJoueurCourant(getListeJoueurs(labyrinthe))['numJoueur'])
+    print(labyrinthe['Plateau'][0]["Val"][lin][col]["Pions"])
 
 def getCarteAJouer(labyrinthe):
     """

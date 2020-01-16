@@ -63,6 +63,7 @@ def afficheCarte(lmt, carte,pion=1,tresor=-1):
             coulCar=pion
         else:
             coulCar=lesPions[0]
+    # print(carte)
     pcouleur(toChar(carte),coulCar,coulFond,style)
 
 def afficheLabyrinthe(lmt,message="",sauts=0):
