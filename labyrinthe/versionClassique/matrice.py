@@ -35,6 +35,7 @@ def getNbLignes(matrice):
     retourne le nombre de lignes de la matrice
     paramètre: matrice la matrice considérée
     """
+    # print(matrice)
     return matrice["Ligne"]
 
 
