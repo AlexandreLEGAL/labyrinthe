@@ -39,7 +39,7 @@ def getPlateau(labyrinthe):
     paramètre: labyrinthe le labyrinthe considéré
     résultat: la matrice représentant le plateau de ce labyrinthe
     """
-    return labyrinthe["Plateau"]
+    return labyrinthe["Plateau"][0]
 
 def getNbParticipants(labyrinthe):
     """
@@ -91,14 +91,14 @@ def getNbTresors(labyrinthe):
     retourne le nombre de trésors qu'il reste sur le labyrinthe
     paramètre: labyrinthe le labyrinthe considéré
     résultat: le nombre de trésors sur le plateau
-    """    
+    """
     res=0
     listerand = []
     for i in range(0, 7):
         for j in range(0, 7):
             listerand.append((i, j))
-    for coord in listerand:
-        dico=getVal(labyrinthe["Plateau"][0],i,j)
+    for (k,l) in listerand:
+        dico=getVal(labyrinthe["Plateau"][0],k,l)
         if dico["Tresor"]>0:
             res+=1
     return res
