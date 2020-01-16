@@ -25,19 +25,11 @@ def Plateau(nbJoueurs, nbTresors):
               - la carte amovible qui n'a pas été placée sur le plateau
     """
     if 12 <= nbTresors <= 46 and 1 <= nbJoueurs <= 4:
-        # for carte in listeCartes:  # modifie la liste de carte pour ne pas avoir formation de mur impossible
-        #     if carte == "Ø":
-        #         listeCartes.remove(carte)
         semi_plateau = Matrice(7, 7)
-        # listeCartes_mur = [] # FACTORISER LA FONCTION
-        # for carte in listeCartes:
-        #
-        # afficheMatrice(semi_plateau)
         ## Créer une matrice vide, ajouter les cartes fixes et les pions
         liste_joueur = [[], [], [], []]
         for i in range(nbJoueurs):
             liste_joueur[i].append(i + 1)
-        # # print("liste_joueur = " + str(liste_joueur))
         setVal(semi_plateau, 0, 0, Carte(True, False, False, True, 0, liste_joueur[0]))
         setVal(semi_plateau, 0, 6, Carte(True, True, False, False, 0, liste_joueur[1]))
         setVal(semi_plateau, 6, 0, Carte(False, False, True, True, 0, liste_joueur[2]))
@@ -59,16 +51,12 @@ def Plateau(nbJoueurs, nbTresors):
         for i in range(0, getNbLignes(semi_plateau), 2):
             if i == 0 or i == 6:
                 for j in range(2, 5, 2):
-                    # # print(indice)
                     setVal(semi_plateau, i, j, carte_fixe_sans_angles[indice])
                     indice += 1
             else:
                 for j in range(0, 7, 2):
-                    # # print(indice)
                     setVal(semi_plateau, i, j, carte_fixe_sans_angles[indice])
                     indice += 1
-
-        # # print("semi_plateau = " + str(semi_plateau))
 
         ## ensuite la ou les valeurs de la matrice = 0 mettre des cartes amovible préalablement créer
 
@@ -88,27 +76,13 @@ def Plateau(nbJoueurs, nbTresors):
             tourneAleatoire(murDroit)
             carte_amovible.append(deepcopy(murDroit))
 
-        # Mélanger les carte amovible
-        # print("carte_amovible = " + str(carte_amovible))
         random.shuffle(carte_amovible)  # On mélange toute les cartes amovibles
-        # print("carte_amovible = " + str(carte_amovible))
 
         # Mettre des trésors dans les premières cartes
-        # tresor = 13
-        # while tresor < nbTresors:
-        #     num = random.randint(0, len(carte_amovible) - 1)
-        #     if carte_amovible[num]['Tresor'] is 0:
-        #         mettreTresor(carte_amovible[num], tresor)
-        #         tresor += 1
-        # print("carte_amovible = " + str(carte_amovible))
         for i in range(nbTresors - 12):  # On met des trésors dans les nbTresors premières carte puis on remélange
             mettreTresor(carte_amovible[i], i + 13)  # i+13 car les trésor de 1 à 12 sont placé sur les carte fixes
-        # print("carte_amovible = " + str(carte_amovible))
 
-        # Mélanger
-
-        random.shuffle(carte_amovible)
-        # print("carte_amovible avec tresor melanger = " + str(carte_amovible))
+        random.shuffle(carte_amovible)  # On mélange toute les cartes amovibles
 
         # Placer les cartes amovibles dans le plateau
 
@@ -125,7 +99,6 @@ def Plateau(nbJoueurs, nbTresors):
                     est = carte_amovible[0]["Mur"][1]
                     sud = carte_amovible[0]["Mur"][2]
                     ouest = carte_amovible[0]["Mur"][3]
-                    # print("carte_amovible = " + str(carte_amovible))
             else:
                 for j in range(getNbColonnes(semi_plateau)):
                     setVal(semi_plateau, i, j, Carte(nord, est, sud, ouest, carte_amovible[0]["Tresor"]))
@@ -134,8 +107,6 @@ def Plateau(nbJoueurs, nbTresors):
                     est = carte_amovible[0]["Mur"][1]
                     sud = carte_amovible[0]["Mur"][2]
                     ouest = carte_amovible[0]["Mur"][3]
-                    # print("carte_amovible = " + str(carte_amovible))
-        # print("semi_plateau avec carte amovible = " + str(semi_plateau))
         return semi_plateau, carte_amovible[0]
 
 
@@ -162,21 +133,15 @@ def creerCartesAmovibles(tresorDebut, nbTresors):
         tourneAleatoire(murDroit)
         carte_amovible.append(murDroit.copy())
 
-    # Mélanger les carte amovible
-
     random.shuffle(carte_amovible)  # On mélange toute les cartes amovibles
-    # print("carte_amovible = " + str(carte_amovible))
 
     # Mettre des trésors dans les premières cartes
 
     for i in range(nbTresors - 12):  # On met des trésors dans les nbTresors premières carte puis on remélange
         mettreTresor(carte_amovible[i],
                      i + 13 + tresorDebut)  # i+13 car les trésor de 1 à 12 sont placé sur les carte fixes
-    # print("carte_amovible = " + str(carte_amovible))
 
-    # Mélanger
-
-    random.shuffle(carte_amovible)
+    random.shuffle(carte_amovible)  # On mélange toute les cartes amovibles
     return carte_amovible
 
 
@@ -210,9 +175,6 @@ def getCoordonneesTresor(plateau, numTresor):
     # print(plateau)
     for i in range(getNbLignes(plateau[0])):
         for j in range(getNbColonnes(plateau[0])):
-            # print(plateau[0])
-            # print(i)
-            # print(j)
             if getTresor(getVal(plateau[0], i, j)) == numTresor:
                 res = i, j
     return res
@@ -227,7 +189,6 @@ def getCoordonneesJoueur(plateau, numJoueur):
               le joueur n'est pas sur le plateau
     """
     res = None
-    # print(plateau)
     for i in range(getNbLignes(plateau)):
         for j in range(getNbColonnes(plateau)):
             if possedePion(getVal(plateau, i, j), numJoueur):
@@ -244,9 +205,7 @@ def prendrePionPlateau(plateau, lin, col, numJoueur):
                 numJoueur: le numéro du joueur qui correspond au pion
     Cette fonction ne retourne rien mais elle modifie le plateau
     """
-    # print(getVal(plateau[0], lin, col))
     prendrePion(plateau[0]["Val"][lin][col], numJoueur)
-    # print(getVal(plateau[0], lin, col))
 
 
 def poserPionPlateau(plateau, lin, col, numJoueur):
@@ -275,71 +234,40 @@ def accessible(plateau, ligD, colD, ligA, colA):
     trouver = False
     case_parcouru = 0
     liste_chemin = [(ligD, colD)]
-    # print(liste_chemin)
     cpt = 0
     indice_chemin = []
     while case_parcouru < 49 and not trouver:
         if len(
                 liste_chemin) > 1:  # Pour tout les autre déplacements ajoute les différents chemins possible dans liste_chemin
-            cpt = 0
-            for indice in indice_chemin:  # len(liste_chemin)-cpt, len(liste_chemin)-1 ## 1, nbchemin * 2, 2
-                # for chemin_poss in range(1, nbchemin * 2, 2):
+            for indice in indice_chemin:
                 nb = 0
-                # print("nb" + str(nb))
                 if 0 <= liste_chemin[indice][0] - 1 < 7:
                     if passageNord(getVal(plateau[0], liste_chemin[indice][0], liste_chemin[indice][1]),
                                    getVal(plateau[0], liste_chemin[indice][0] - 1, liste_chemin[indice][1])):
                         liste_chemin.append((liste_chemin[indice][0] - 1, liste_chemin[indice][1]))
-                        cpt += 1
-                        # indice_chemin.append(indice_chemin[-1] + 1)
                         nb += 1
-                    # print("nb" + str(nb))
-                    # print("nord")
-                    # print(liste_chemin)
                 if 0 <= liste_chemin[indice][1] + 1 < 7:
                     if passageEst(getVal(plateau[0], liste_chemin[indice][0], liste_chemin[indice][1]),
                                   getVal(plateau[0], liste_chemin[indice][0], liste_chemin[indice][1] + 1)):
                         liste_chemin.append((liste_chemin[indice][0], liste_chemin[indice][1] + 1))
-                        cpt += 1
-                        # indice_chemin.append(indice_chemin[-1] + 1)
                         nb += 1
-                    # print("nb" + str(nb))
-                    # print("est")
-                    # print(liste_chemin)
                 if 0 <= liste_chemin[indice][0] + 1 < 7:
                     if passageSud(getVal(plateau[0], liste_chemin[indice][0], liste_chemin[indice][1]),
                                   getVal(plateau[0], liste_chemin[indice][0] + 1, liste_chemin[indice][1])):
                         liste_chemin.append((liste_chemin[indice][0] + 1, liste_chemin[indice][1]))
-                        cpt += 1
-                        # indice_chemin.append(indice_chemin[-1] + 1)
                         nb += 1
-                    # print("nb" + str(nb))
-                    # print("Sud")
-                    # print(liste_chemin)
                 if 0 <= liste_chemin[indice][1] - 1 < 7:
                     if passageOuest(getVal(plateau[0], liste_chemin[indice][0], liste_chemin[indice][1]),
                                     getVal(plateau[0], liste_chemin[indice][0], liste_chemin[indice][1] - 1)):
                         liste_chemin.append((liste_chemin[indice][0], liste_chemin[indice][1] - 1))
-                        cpt += 1
-                        # indice_chemin.append(indice_chemin[-1] + 1)
                         nb += 1
-                    # print("nb" + str(nb))
-                    # print("ouest")
-                    # print(liste_chemin)
-                # # print(case_parcouru)
                 case_parcouru += 1
                 if (ligA, colA) in liste_chemin:
                     trouver = True
-                # print("indice_chemin" + str(indice_chemin))
                 for elem in range(nb):
                     indice_chemin.append(indice_chemin[-1] + 1)
-                # print("indice_chemin après append" + str(indice_chemin))
                 for elem in range(nb):
                     indice_chemin.pop(0)
-                # print("indice_chemin après pop" + str(indice_chemin))
-                # print(liste_chemin)
-                # print(cpt)
-                # print(case_parcouru)
         elif len(
                 liste_chemin) == 1:  # Pour le premier déplacement ajoute les différents chemins possible dans liste_chemin
             if 0 <= ligD - 1 < 7:
@@ -363,11 +291,6 @@ def accessible(plateau, ligD, colD, ligA, colA):
                     cpt += 1
                     indice_chemin.append(cpt)
             case_parcouru = +1
-
-            # print(liste_chemin)
-            # print(cpt)
-            # print(case_parcouru)
-            # print(indice_chemin)
         if len(liste_chemin) == 1:  # Si il n'y a pas de chemin à partir de la case de départ retourne None
             case_parcouru = 50
     return trouver
@@ -390,7 +313,6 @@ def accessibleDist(plateau, ligD, colD, ligA, colA):
     trouver = None
     case_parcouru = 0
     liste_chemin = [[(ligD, colD)]]
-    # print(liste_chemin)
     cpt = 0
     nb = 0
     indice_chemin = []
@@ -398,84 +320,45 @@ def accessibleDist(plateau, ligD, colD, ligA, colA):
         if len(
                 liste_chemin) > 1:  # Pour tout les autre déplacements ajoute les différents chemins possible dans liste_chemin
             cpt = 0
-            # print("avant  = " + str(indice_chemin))
             avant = len(indice_chemin)
-            # print("avant  = " + str(avant))
             for indice in indice_chemin:  # len(liste_chemin)-cpt, len(liste_chemin)-1 ## 1, nbchemin * 2, 2
-                # for chemin_poss in range(1, nbchemin * 2, 2):
-                # print("nb" + str(nb))
                 if 0 <= liste_chemin[indice][-1][0] - 1 < 7:
                     if passageNord(getVal(plateau[0], liste_chemin[indice][-1][0], liste_chemin[indice][-1][1]),
                                    getVal(plateau[0], liste_chemin[indice][-1][0] - 1, liste_chemin[indice][-1][1])):
                         liste_chemin.append(deepcopy(liste_chemin[indice]))
                         liste_chemin[-1].append((liste_chemin[indice][-1][0] - 1, liste_chemin[indice][-1][1]))
-                        # liste_chemin.append((liste_chemin[indice][0] - 1, liste_chemin[indice][1]))
                         cpt += 1
-                        # indice_chemin.append(indice_chemin[-1] + 1)
                         nb += 1
-                        # print("Liste chemin possible = " + str(liste_chemin))
-                        # print("nb" + str(nb))
-                        # print("nord")
-                        # print(liste_chemin)
                 if 0 <= liste_chemin[indice][-1][1] + 1 < 7:
                     if passageEst(getVal(plateau[0], liste_chemin[indice][-1][0], liste_chemin[indice][-1][1]),
                                   getVal(plateau[0], liste_chemin[indice][-1][0], liste_chemin[indice][-1][1] + 1)):
                         liste_chemin.append(deepcopy(liste_chemin[indice]))
                         liste_chemin[-1].append((liste_chemin[indice][-1][0], liste_chemin[indice][-1][1] + 1))
-                        # liste_chemin.append((liste_chemin[indice][0], liste_chemin[indice][1] + 1))
                         cpt += 1
-                        # indice_chemin.append(indice_chemin[-1] + 1)
                         nb += 1
-                        # print("Liste chemin possible = " + str(liste_chemin))
-                        # print("nb" + str(nb))
-                        # print("est")
-                        # print(liste_chemin)
                 if 0 <= liste_chemin[indice][-1][0] + 1 < 7:
                     if passageSud(getVal(plateau[0], liste_chemin[indice][-1][0], liste_chemin[indice][-1][1]),
                                   getVal(plateau[0], liste_chemin[indice][-1][0] + 1, liste_chemin[indice][-1][1])):
                         liste_chemin.append(deepcopy(liste_chemin[indice]))
                         liste_chemin[-1].append((liste_chemin[indice][-1][0] + 1, liste_chemin[indice][-1][1]))
-                        # liste_chemin.append((liste_chemin[indice][0] + 1, liste_chemin[indice][1]))
                         cpt += 1
-                        # indice_chemin.append(indice_chemin[-1] + 1)
                         nb += 1
-                        # print("Liste chemin possible = " + str(liste_chemin))
-                        # print("nb" + str(nb))
-                        # print("Sud")
-                        # print(liste_chemin)
                 if 0 <= liste_chemin[indice][-1][1] - 1 < 7:
                     if passageOuest(getVal(plateau[0], liste_chemin[indice][-1][0], liste_chemin[indice][-1][1]),
                                     getVal(plateau[0], liste_chemin[indice][-1][0], liste_chemin[indice][-1][1] - 1)):
                         liste_chemin.append(deepcopy(liste_chemin[indice]))
                         liste_chemin[-1].append((liste_chemin[indice][-1][0], liste_chemin[indice][-1][1] - 1))
-                        # liste_chemin.append((liste_chemin[indice][0], liste_chemin[indice][1] - 1))
                         cpt += 1
-                        # indice_chemin.append(indice_chemin[-1] + 1)
                         nb += 1
-                        # print("Liste chemin possible = " + str(liste_chemin))
-                        # print("nb" + str(nb))
-                        # print("ouest")
-                        # print(liste_chemin)
-                # # print(case_parcouru)
                 case_parcouru += 1
                 for elem in liste_chemin:
                     if (ligA, colA) in elem:
                         trouver = elem
-                        # trouver = "Chemin trouver ! " + str(elem)
-                # print("indice_chemin" + str(indice_chemin))
-            # print(nb)
             for elem in range(nb):
                 indice_chemin.append(indice_chemin[-1] + 1)
-            # print("indice_chemin après append" + str(indice_chemin))
             for elem in range(avant):
                 indice_chemin.pop(0)
             nb = 0
-            # print("indice_chemin après pop" + str(indice_chemin))
-            # print("Liste chemin possible = " + str(liste_chemin))
-            # print(liste_chemin)
-            # trouver = True
-            # print(cpt)
-            # print(case_parcouru)
         elif len(
                 liste_chemin) == 1:  # Pour le premier déplacement ajoute les différents chemins possible dans liste_chemin
             if 0 <= ligD - 1 < 7:
@@ -506,12 +389,6 @@ def accessibleDist(plateau, ligD, colD, ligA, colA):
             for elem in liste_chemin:
                 if (ligA, colA) in elem:
                     trouver = elem
-                    # trouver = "Chemin trouver ! " + str(elem)
-
-            # print("Liste premier chemin possible = " + str(liste_chemin))
-            # print(cpt)
-            # print(case_parcouru)
-            # print(indice_chemin)
         if len(liste_chemin) == 1:
             case_parcouru = 50
     return trouver

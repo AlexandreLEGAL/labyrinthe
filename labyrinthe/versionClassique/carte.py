@@ -230,7 +230,6 @@ def toChar(c):
     """
     # listeCartes = ['╬', '╦', '╣', '╗', '╩', '═', '╝', 'Ø', '╠', '╔', '║', 'Ø', '╚', 'Ø', 'Ø', 'Ø']
     # {"Mur": (nord, est, sud, ouest), "Tresor": tresor, "Pions": pions}
-    # print(coderMurs(c))
     return listeCartes[coderMurs(c)]
 
 
