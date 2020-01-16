@@ -233,23 +233,6 @@ def toChar(c):
     return listeCartes[coderMurs(c)]
 
 
-def char_to_carte(char):
-    """
-    renvoie la valeur associer au caractère semi graphique
-    paramètres char un caractère semi graphique
-    """
-    ok = False
-    code = 0
-    while code < len(listeCartes) and not ok:  # code = indice du caractère semi graphique
-        if char == listeCartes[code]:
-            ok = True
-            code -= 1
-        code += 1
-    carte = Carte(False, False, False, False)
-    decoderMurs(carte, code)
-    return carte  # char_to_carte('╦') = {'Mur': (True, False, False, False), 'Tresor': 0, 'Pions': []}
-
-
 def passageNord(carte1, carte2):
     """
     suppose que la carte2 est placée au nord de la carte1 et indique
