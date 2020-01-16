@@ -274,7 +274,8 @@ def executerActionPhase1(labyrinthe,action,rangee):
     paramètres: labyrinthe: le labyrinthe considéré
                 action: un caractère indiquant l'action à effecter
                         si action vaut 'T' => faire tourner la carte à jouer
-                        si action est une des lettres N E S O et rangee est un des chiffre 1,3,5 
+                        si action est une des lettres N E S O et
+                rangee: est un des chiffre 1,3,5
                         => insèrer la carte à jouer à la direction action sur la rangée rangee
                            et faire le nécessaire pour passer en phase 2
     résultat: un entier qui vaut
@@ -295,12 +296,15 @@ def executerActionPhase1(labyrinthe,action,rangee):
         else:
             return 4
     if (rangee==1 or rangee==3 or rangee==5) and (action=="N" or action=="S" or action=="O" or action=="E"):
+        print(coupInterdit(labyrinthe,action,rangee))
         if coupInterdit(labyrinthe,action,rangee):
             jouerCarte(labyrinthe, action, rangee)
             return 1
         else:
             return 2
     else:
+        print(rangee, action)
+        # print(coupInterdit(labyrinthe, action, rangee))
         return 3
 
 def accessibleDistJoueurCourant(labyrinthe, ligA,colA):

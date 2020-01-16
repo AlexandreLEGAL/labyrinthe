@@ -167,9 +167,12 @@ def saisirOrdre(lmt):
     if x == 'T':
         res = (x,None)
     elif x == 'N' or x == 'E' or x == 'S' or x == 'O':
-        y=input("Veuillez rentre un chiffre parmis les suivants: '1', '3' ou '5'")
-        if y == "1" or y == "3" or y == "5":
+        y=int(input("Veuillez rentre un chiffre parmis les suivants: '1', '3' ou '5'"))
+        # print("y = "+str(y))
+        if y == 1 or y == 3 or y == 5:
+            # print("oui le pain")
             res = (x,int(y))
+            # print("res = "+str(res))
         else :
             res = (-1,-1)
     else :
@@ -221,6 +224,7 @@ def demarrer(lmt):
 
         # la première phase est terminée, on va demander au joueur sa case destination
         chemin=None
+        # print(labyrinthe)
         xDep,yDep=getCoordonneesJoueurCourant(labyrinthe)
         nomJC=getNomJoueurCourant(labyrinthe)
         pionJC=getNumJoueurCourant(labyrinthe)
@@ -262,20 +266,20 @@ if __name__=='__main__':
     listeJoueurs=[]
     rep='O'
     i=1
-    listeJoueurs.append("oui")
-    listeJoueurs.append("non")
-    # while rep in ['o','O']:
-    #     nom=input("Nom du joueur "+str(i)+"? ")
-    #     listeJoueurs.append(nom)
-    #     i+=1
-    #     if i==5:
-    #         rep ='N'
-    #     else:
-    #         rep=input("Y a-t-il un autre joueurs (o/N)? ")
+    # listeJoueurs.append("oui")
+    # listeJoueurs.append("non")
+    while rep in ['o','O']:
+        nom=input("Nom du joueur "+str(i)+"? ")
+        listeJoueurs.append(nom)
+        i+=1
+        if i==5:
+            rep ='N'
+        else:
+            rep=input("Y a-t-il un autre joueurs (o/N)? ")
 
     # saisie du nombre de trésors par joueur
-    # nbTresors=input("Combien de trésors à trouver par joueur (0 pour le maximum possible)?")
-    nbTresors=8
+    nbTresors=input("Combien de trésors à trouver par joueur (0 pour le maximum possible)?")
+    # nbTresors=8
     ok=True
     try:
         nbTresorsInt=int(nbTresors)

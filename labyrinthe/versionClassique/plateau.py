@@ -224,9 +224,10 @@ def getCoordonneesJoueur(plateau, numJoueur):
               le joueur n'est pas sur le plateau
     """
     res = None
-    for i in range(getNbLignes(plateau[0])):
-        for j in range(getNbColonnes(plateau[0])):
-            if possedePion(getVal(plateau[0], i, j), numJoueur):
+    # print(plateau)
+    for i in range(getNbLignes(plateau)):
+        for j in range(getNbColonnes(plateau)):
+            if possedePion(getVal(plateau, i, j), numJoueur):
                 res = i, j
     return res
 
