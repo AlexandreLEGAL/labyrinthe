@@ -91,22 +91,25 @@ def Plateau(nbJoueurs, nbTresors):
             est = carte_amovible[0]["Mur"][1]
             sud = carte_amovible[0]["Mur"][2]
             ouest = carte_amovible[0]["Mur"][3]
+            tresor = carte_amovible[0]["Tresor"]
             if i % 2 == 0:
                 for j in range(1, getNbColonnes(semi_plateau), 2):
-                    setVal(semi_plateau, i, j, Carte(nord, est, sud, ouest, carte_amovible[0]["Tresor"]))
+                    setVal(semi_plateau, i, j, Carte(nord, est, sud, ouest, tresor, []))
                     carte_amovible.pop(0)
                     nord = carte_amovible[0]["Mur"][0]
                     est = carte_amovible[0]["Mur"][1]
                     sud = carte_amovible[0]["Mur"][2]
                     ouest = carte_amovible[0]["Mur"][3]
-            else:
+                    tresor = carte_amovible[0]["Tresor"]
+            elif i % 2 != 0:
                 for j in range(getNbColonnes(semi_plateau)):
-                    setVal(semi_plateau, i, j, Carte(nord, est, sud, ouest, carte_amovible[0]["Tresor"]))
+                    setVal(semi_plateau, i, j, Carte(nord, est, sud, ouest, tresor, []))
                     carte_amovible.pop(0)
                     nord = carte_amovible[0]["Mur"][0]
                     est = carte_amovible[0]["Mur"][1]
                     sud = carte_amovible[0]["Mur"][2]
                     ouest = carte_amovible[0]["Mur"][3]
+                    tresor = carte_amovible[0]["Tresor"]
         return semi_plateau, carte_amovible[0]
 
 
