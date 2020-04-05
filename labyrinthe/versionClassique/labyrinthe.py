@@ -295,15 +295,8 @@ def executerActionPhase1(labyrinthe, action, rangee):
               4 dans tous les autres cas
     """
     if action == "T":
-        sens = input("Sens horaire (H) ou anti-horaire (A) ?")
-        if sens == "H":
-            tournerCarte(labyrinthe, "H")
-            return 0
-        elif sens == "A":
-            tournerCarte(labyrinthe, "A")
-            return 0
-        else:
-            return 4
+        tournerCarte(labyrinthe, "H")
+        return 0
     if (rangee == 1 or rangee == 3 or rangee == 5) and (
             action == "N" or action == "S" or action == "O" or action == "E"):
         if coupInterdit(labyrinthe, action, rangee):
@@ -326,8 +319,8 @@ def accessibleDistJoueurCourant(labyrinthe, ligA, colA):
     résultat: une liste de couples d'entier représentant un chemin que le joueur
               courant atteigne la case d'arrivée s'il existe None si pas de chemin
     """
-    (x, y) = getCoordonneesJoueur(getPlateau(labyrinthe)[0], getJoueurCourant(labyrinthe["Joueurs"]))
-    return accessibleDist(getPlateau(labyrinthe)[0], x, y, ligA, colA)
+    (x, y) = getCoordonneesJoueur(getPlateau(labyrinthe)[0], getJoueurCourant(labyrinthe["Joueurs"])["numJoueur"])
+    return accessibleDist(getPlateau(labyrinthe), x, y, ligA, colA)
 
 
 def finirTour(labyrinthe):

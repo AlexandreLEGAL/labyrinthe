@@ -68,3 +68,4 @@ def getNom(joueur):
     résultat: le nom du joueur 
     """
     return joueur['nom']
+

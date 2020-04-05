@@ -32,7 +32,7 @@ class LabyrintheGraphique(object):
         self.labyrinthe = labyrinthe
         self.fini = False
         self.couleurTexte = couleur
-        self.laMatrice = getPlateau(labyrinthe)
+        self.laMatrice = getPlateau(labyrinthe)[0]
         self.nbCol = getNbColonnes(self.laMatrice)
         self.nbLig = getNbLignes(self.laMatrice)
         self.titre = titre
@@ -286,13 +286,13 @@ class LabyrintheGraphique(object):
         x = pos[1] // self.deltah
         y = pos[0] // self.deltal
         if x == 0 and y in [2, 4, 6]:
-            return ('N', y - 1)
-        if x == self.nbCol + 1 and y in [2, 4, 6]:
             return ('S', y - 1)
+        if x == self.nbCol + 1 and y in [2, 4, 6]:
+            return ('N', y - 1)
         if y == 0 and x in [2, 4, 6]:
-            return ('O', x - 1)
-        if y == self.nbLig + 1 and x in [2, 4, 6]:
             return ('E', x - 1)
+        if y == self.nbLig + 1 and x in [2, 4, 6]:
+            return ('O', x - 1)
         if x == 0 or x == self.nbCol + 1 or y == 0 or y == self.nbLig + 1:
             return (-1, -1)
         return (x - 1, y - 1)
@@ -355,6 +355,7 @@ class LabyrintheGraphique(object):
                         self.messageInfo = "Veuillez choisir une case du labyrinthe"
                         self.imgInfo = []
                     else:
+                        # print(self.labyrinthe, x, y)
                         chemin = accessibleDistJoueurCourant(self.labyrinthe, x, y)
                         jc = numJoueurCourant(getListeJoueurs(self.labyrinthe))
                         if chemin == None:
